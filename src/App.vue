@@ -1,24 +1,22 @@
 <template>
 	<div id="app">
-	<img alt="Vue logo" src="./assets/logo.png">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-		<div class="container ">
+		<div  class="container ">
 			<div class="row">
 				<div class="col-12">
 					<form>
-						<label for="username">usernamed</label>
+						<label for="username">username</label>
 						<input id="username" v-model="username" type="text">
 					</form>
 					<div class="chat-container">
-						<div ref="messageBox" class="message-box">
-							
-						<div v-for="(element, index) in messages" :key="`message-${index}`" >
-							<span class="p-2">{{element}}</span>
+						<div ref="messageArea" class="message-area">	
+						<div  class="meesageBubble" v-for="(message, index) in messages" :key="`message-${index}`" >
+								<span class="p-2">username: {{message.username}}</span><br>
+								<span>message: {{message.message}}</span>							
 						</div>
 						</div>
-						<form @submit.prevent="addMessage" class="message-group">
-							<input v-model="currentMessage" type="text" placeholder="Enter a message" >
-							<button :disabled="!		currentMessage" type="submit"> Send</button>
+						<form @submit.prevent="addMessage" class="message-form">
+							<input class="w-75" v-model="currentMessage" type="text" placeholder="Enter a message" >
+							<button  :disabled="!currentMessage" type="submit"> Send</button>
 						</form>
 					</div>
 				</div>
@@ -28,25 +26,35 @@
 </template>
 
 <script>
-
+import io from 'socket.io-client'
 export default {
 	name: 'app',
 	components: {
 	},
+	mounted() {
+        this.socket.on('MESSAGE', (data) => {
+		this.messages.push(data)
+        });
+    },
 	data() {
 		return {
 			messages:[],
 			currentMessage:'',
-			username:''
+			username:'',
+			socket: io('localhost:8081')
 		}
 	},
 	methods:{
 		addMessage(){
 			if(this.currentMessage !== ''){
-				this.messages.push(this.currentMessage + "  " + this.username)
+				let data = {
+					message: this.currentMessage,
+					username:this.username
+				}
+				this.socket.emit("SEND_MESSAGE",data)
 				this.currentMessage = ''
-				let messageBox = this.$refs.messageBox
-				messageBox.scrollTop = messageBox.scrollHeight;
+				let messageArea = this.$refs.messageArea
+				messageArea.scrollTop = messageArea.scrollHeight;
 			}
 		}
 	}
