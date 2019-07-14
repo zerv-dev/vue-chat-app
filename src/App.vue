@@ -1,62 +1,40 @@
 <template>
 	<div id="app">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 		<div  class="container ">
-			<div class="row">
-				<div class="col-12">
-					<form>
-						<label for="username">username</label>
-						<input id="username" v-model="username" type="text">
-					</form>
-					<div class="chat-container">
-						<div ref="messageArea" class="message-area">	
-						<div  class="meesageBubble" v-for="(message, index) in messages" :key="`message-${index}`" >
-								<span class="p-2">username: {{message.username}}</span><br>
-								<span>message: {{message.message}}</span>							
-						</div>
-						</div>
-						<form @submit.prevent="addMessage" class="message-form">
-							<input class="w-75" v-model="currentMessage" type="text" placeholder="Enter a message" >
-							<button  :disabled="!currentMessage" type="submit"> Send</button>
-						</form>
-					</div>
-				</div>
+			<form class="usernameForm" v-if="!userNameHasBeenSubmitted || editUsername" @submit.prevent="submitUsername">
+				<label for="username">username</label>
+				<input id="username" v-model="username" type="text">
+				<button :disabled="!username.length"  class="btn btn-primary" type="submit">yikes</button>
+            </form>
+			<div v-else>
+				<strong>{{username}}</strong> <i @click="editUsername= true" class="fas fa-pencil-alt fa-lg ml-4"></i>
 			</div>
+			<Chat v-if="userNameHasBeenSubmitted"  :username="username" ></Chat>
+			
 		</div>
 	</div>
 </template>
 
 <script>
-import io from 'socket.io-client'
+import Chat from "./components/Chat";
 export default {
 	name: 'app',
 	components: {
+		Chat
 	},
-	mounted() {
-        this.socket.on('MESSAGE', (data) => {
-		this.messages.push(data)
-        });
-    },
 	data() {
 		return {
-			messages:[],
-			currentMessage:'',
-			username:'',
-			socket: io('localhost:8081')
+			userNameHasBeenSubmitted: false,
+			editUsername:false,
+			username:''
 		}
 	},
 	methods:{
-		addMessage(){
-			if(this.currentMessage !== ''){
-				let data = {
-					message: this.currentMessage,
-					username:this.username
-				}
-				this.socket.emit("SEND_MESSAGE",data)
-				this.currentMessage = ''
-				let messageArea = this.$refs.messageArea
-				messageArea.scrollTop = messageArea.scrollHeight;
-			}
-		}
+	submitUsername(){
+		this.userNameHasBeenSubmitted = true
+		this.editUsername = false;
+	}
 	}
 }
 </script>
