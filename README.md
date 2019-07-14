@@ -1,22 +1,22 @@
 # vue-chat-app
 
+This was a basic chat application I created so I can expose myself with Scoket.io an express.js
+
 ## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* Go to your terminal and type in npm install
+* Next type in npm run dev to serve the application
+* Look up your ip adress(Either in google or type in ipconfig in your terminal)
+* Type in the ip adress with the port `8080` on another device. THi allows for multiple people to use  the chatrrom at once
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Technoloiges used
+Vue
+
+Node.js
+
+Express.js
+
+SOcket.io
+
 
