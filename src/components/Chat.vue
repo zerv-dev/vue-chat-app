@@ -10,7 +10,7 @@
                     </div>
                     <form @submit.prevent="addMessage" class="message-form">
                         <input class="w-75" v-model="currentMessage" type="text" placeholder="Enter a message" >
-                        <button  class="btn btn-outline-info" :disabled="!currentMessage" type="submit"> Send</button>
+                        <button  class="btn btn-primary ml-4" :disabled="!currentMessage" type="submit"> Send</button>
                     </form>
                 </div>
             </div>

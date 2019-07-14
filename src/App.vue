@@ -2,12 +2,13 @@
 	<div id="app">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 		<div  class="container ">
-			<form class="usernameForm" v-if="!userNameHasBeenSubmitted || editUsername" @submit.prevent="submitUsername">
+			<form class="row usernameForm" v-if="!userNameHasBeenSubmitted || editUsername" @submit.prevent="submitUsername">
 				<label for="username">username</label>
 				<input id="username" v-model="username" type="text">
-				<button :disabled="!username.length"  class="btn btn-primary" type="submit">yikes</button>
+				<button :disabled="!username.length || username.length > 50"  class="btn btn-primary" type="submit">Submit Username</button>
+				<div v-if="username.length > 50" class="text-danger">Username cant be onger thain 50 characters</div>
             </form>
-			<div v-else>
+			<div class="mb-2"v-else>
 				<strong>{{username}}</strong> <i @click="editUsername= true" class="fas fa-pencil-alt fa-lg ml-4"></i>
 			</div>
 			<Chat v-if="userNameHasBeenSubmitted"  :username="username" ></Chat>
