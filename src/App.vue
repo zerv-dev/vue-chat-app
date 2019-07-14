@@ -8,7 +8,7 @@
 				<button :disabled="!username.length || username.length > 50"  class="btn btn-primary" type="submit">Submit Username</button>
 				<div v-if="username.length > 50" class="text-danger">Username cant be onger thain 50 characters</div>
             </form>
-			<div class="mb-2"v-else>
+			<div class="mb-2" v-else>
 				<strong>{{username}}</strong> <i @click="editUsername= true" class="fas fa-pencil-alt fa-lg ml-4"></i>
 			</div>
 			<Chat v-if="userNameHasBeenSubmitted"  :username="username" ></Chat>
