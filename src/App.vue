@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
 import Chat from "./components/Chat";
 export default {
 	name: 'app',
@@ -28,13 +29,15 @@ export default {
 		return {
 			userNameHasBeenSubmitted: false,
 			editUsername:false,
-			username:''
+			username:'',
+			socket: io('localhost:8081')
 		}
 	},
 	methods:{
 	submitUsername(){
 		this.userNameHasBeenSubmitted = true
 		this.editUsername = false;
+		this.socket.emit("NEW_USER",this.username)
 	}
 	}
 }

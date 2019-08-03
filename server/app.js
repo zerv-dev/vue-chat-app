@@ -18,5 +18,7 @@ io.on('connection', function(socket) {
         console.log(data)
         io.emit('MESSAGE', data)
     })
-        
+    socket.on("NEW_USER",(data)=>{
+        console.log(data)
+    })
 });

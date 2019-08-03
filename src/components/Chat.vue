@@ -1,20 +1,20 @@
 <template>
-        <div class="row">
-            <div class="col-12">
-                <div class="chat-container">
-                    <div ref="messageArea" class="message-area">	
-                        <div  class="meesageBubble" v-for="(message, index) in messages" :key="`message-${index}`" >
-                            <span class="p-2">username: {{message.username}}</span><br>
-                            <span>message: {{message.message}}</span>							
-                        </div>
-                    </div>
-                    <form @submit.prevent="addMessage" class="message-form">
-                        <input class="w-75" v-model="currentMessage" type="text" placeholder="Enter a message" >
-                        <button  class="btn btn-primary ml-4" :disabled="!currentMessage" type="submit"> Send</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+		<div class="col-12">
+			<div class="chat-container">
+				<div ref="messageArea" class="message-area">	
+					<div  class="message" v-for="(message, index) in messages" :key="`message-${index}`" >
+							<div class="message__text" 	:class="[message.username == username? 'ml-auto' : '']" > {{message.message}}</div>
+							<div class="p-2 text-black-50 "	:class="[message.username == username? 'float-right' : 'float-left']">username: {{message.username}}</div>
+					</div>
+				</div>
+				<form @submit.prevent="addMessage" class="message-form">
+					<input class="w-75" v-model="currentMessage" type="text" placeholder="Enter a message" >
+					<button  class="btn btn-primary ml-4" :disabled="!currentMessage" type="submit"> Send</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </template>
 <script>
 import io from 'socket.io-client';
@@ -30,7 +30,6 @@ export default {
 		return {
 			messages:[],
 			currentMessage:'',
-			// username:'',
 			socket: io('localhost:8081')
 		}
 	},
