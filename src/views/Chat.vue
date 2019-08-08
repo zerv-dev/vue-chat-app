@@ -17,11 +17,10 @@
 	</div>
 </template>
 <script>
-import io from 'socket.io-client';
 import {mapState} from 'vuex'
+import io from 'socket.io-client';
 export default {
     name: 'Chat',
-    // props:['username'],
     mounted() {
         this.socket.on('MESSAGE', (data) => {
 		this.messages.push(data)
@@ -32,11 +31,8 @@ export default {
 			messages:[],
 			currentMessage:'',
 			socket: io('localhost:8081'),
-			// username:'jeff'
+            // username:'jeff'
 		}
-	},
-	computed:{
-		...mapState(['username'])
 	},
 	methods:{
 		addMessage(){
@@ -51,6 +47,9 @@ export default {
 				messageArea.scrollTop = messageArea.scrollHeight;
 			}
 		}
-	}
+	},
+		computed:{
+		...mapState(['username'])
+	},
 }
 </script>
