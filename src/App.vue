@@ -1,9 +1,7 @@
 <template>
 	<div id="app">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-		<div  class="container ">
 			<router-view></router-view>
-		</div>
 	</div>
 </template>
 
@@ -33,6 +31,6 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+	/* margin-top: 60px; */
 }
 </style>
