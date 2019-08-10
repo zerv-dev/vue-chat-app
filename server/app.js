@@ -1,6 +1,17 @@
 const express = require('express');
 const app = express();
+const user = require('./routes/user')
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser');
+const cors = require('cors')
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+app.use('/api/user',user)
 
+
+mongoose.connect('mongodb+srv://zane:data@cluster0-prcql.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true })
 
 const port = process.env.PORT || 8081;
 
