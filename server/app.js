@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const user = require('./routes/user')
+const room = require('./routes/rooms')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const cors = require('cors')
@@ -8,7 +9,9 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
+
 app.use('/api/user',user)
+app.use('/api/room',room)
 
 
 mongoose.connect('mongodb+srv://zane:data@cluster0-prcql.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true })
