@@ -33,10 +33,12 @@ router.put('/',function(req,res) {
     /*
     $set to update all fields in mongodb
     */
-   let userId = mongoose.Types.ObjectId(req.body._id)
+    let userId = mongoose.Types.ObjectId(req.body._id)
     Room.findOneAndUpdate({_id:_id},update,{useFindAndModify:false},(err,result)=>{
         if(err){
-            console.log(err)
+            res.status(500).json({
+                message:'error in the database'
+            })
         }else{
             res.status(202).json({
                 message:'chat has been updated'
@@ -46,11 +48,15 @@ router.put('/',function(req,res) {
     })
 })
 
-
+//gets all the chatrooms the user is a part of
 router.get('/',(req,res)=>{
     let userId =mongoose.Types.ObjectId(req.body._id)
     Room.find({},(error, result)=>{
-        let chats = [];
+        if(err){
+            res.status(500).json({
+                message:'error in the database'
+            })
+        }
         result.forEach(element => {
             if(element.participants.includes(userId)){
                 chats.push(element)
@@ -69,6 +75,9 @@ router.delete('/:id',(req,res)=>{
     let chatId = req.params.id
     Room.findOneAndDelete({_id:chatId},{useFindAndModify:false},(err,result)=>{
         if(err){
+            res.status(500).json({
+                message:'error in the database'
+            })  
             console.log(err)
         }else{
             console.log(result)
