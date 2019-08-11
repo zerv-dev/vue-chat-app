@@ -6,16 +6,13 @@ const mongoose = require('mongoose')
 router.post('/',function(req,res){
     let name = req.body.name;
     let participants = req.body.participants
-    // console.log(req.body)
     let room = new Room({
         _id:new mongoose.Types.ObjectId(),
         name: name,
         participants:participants,
         messages:[]
     })
-    room.save()/*.then((result)=>{
-        console.log(result)
-    })*/
+    room.save()
     res.status(202).json({
         message:'Successfully created a new chatroom'
 
@@ -27,8 +24,7 @@ router.post('/',function(req,res){
 //might change this to a patch request later
 router.put('/',function(req,res) {
     let name = req.body.name;
-    // let participants = req.body.participants
-    // let _id = 
+
     let update = req.body
     /*
     $set to update all fields in mongodb
@@ -52,7 +48,7 @@ router.put('/',function(req,res) {
 router.get('/',(req,res)=>{
     let userId =mongoose.Types.ObjectId(req.body._id)
     Room.find({},(error, result)=>{
-        if(err){
+        if(error){
             res.status(500).json({
                 message:'error in the database'
             })
