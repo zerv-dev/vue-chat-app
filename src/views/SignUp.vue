@@ -53,7 +53,11 @@ import axios from 'axios'
                 password:this.password,
                 email:this.email
             }).then((response)=>{
-                this.submitUser(response.data.username)
+                let payload= {
+                    username:response.data.username,
+                    id:response.data.id
+                }
+                this.submitUser(payload)
                 this.$router.push('/')
             }).catch((response)=>{
                 console.log(response.data)

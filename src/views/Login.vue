@@ -23,6 +23,7 @@
 <script>
 import {mapActions} from 'vuex'
 import axios from 'axios'
+import { log } from 'util';
 export default {
     name:"Login",
 
@@ -36,8 +37,17 @@ export default {
                 username:this.username,
                 password:this.password,
             }).then((response)=>{
-                this.submitUser(response.data.username)
+                console.log(response);
+                
+                let payload= {
+                    username:response.data.username,
+                    id:response.data.id
+                }
+                this.submitUser(payload)
             }).catch((response)=>{
+                // errors
+
+                // eslint-disable-next-line
                 console.log(response)
             })
         },

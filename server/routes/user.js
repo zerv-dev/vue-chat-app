@@ -31,9 +31,9 @@ router.post('/register',function(req,res){
                 console.log(result)
             })   
             res.status(202).json({
-                errors:'',
                 message:'Successfully registered a new user',
-                username: username
+                username: username,
+                id:user._id
             })
         
         }
@@ -52,9 +52,11 @@ router.post('/login',function (req,res){
     .then(user=>{
         console.log(user);
         if(user.length > 0 && user.password == password){
+            console.log(typeof user._id)
             res.status(202).json({
                 message:'Successfully logged in',
-                username: username
+                username: username,
+                id:user[0]._id
             })
         }
         else{ 
