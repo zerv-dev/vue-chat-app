@@ -6,14 +6,14 @@ router.get('/',function(req,res){
     res.send('user api')
 })
 router.post('/register',function(req,res){
-    console.log(req.body.username)
+    // console.log(req.body.username)
     let username = req.body.username
     let email = req.body.email
     let password = req.body.password
     User.find({username:req.body.username})
     .exec()
     .then(user=>{
-        console.log(user);
+        // console.log(user);
         if(user.length > 0){
             res.status(409).json({
                 message:'User already exists'
@@ -26,9 +26,9 @@ router.post('/register',function(req,res){
                 password: password,
                 email: email,
             })
-            console.log(user)
+            // console.log(user)
             user.save().then((result)=>{
-                console.log(result)
+                // console.log(result)
             })   
             res.status(202).json({
                 message:'Successfully registered a new user',
@@ -50,9 +50,8 @@ router.post('/login',function (req,res){
     User.find({username:req.body.username})
     .exec()
     .then(user=>{
-        console.log(user);
+        // console.log(user);
         if(user.length > 0 && user.password == password){
-            console.log(typeof user._id)
             res.status(202).json({
                 message:'Successfully logged in',
                 username: username,

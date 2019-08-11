@@ -46,15 +46,18 @@ router.put('/',function(req,res) {
 
 //gets all the chatrooms the user is a part of
 router.get('/',(req,res)=>{
-    let userId =mongoose.Types.ObjectId(req.body._id)
+    // console.log(req.query._id)
+    let userId = mongoose.Types.ObjectId(req.query._id)
     Room.find({},(error, result)=>{
         if(error){
             res.status(500).json({
                 message:'error in the database'
             })
         }
+        let chats = []
         result.forEach(element => {
             if(element.participants.includes(userId)){
+                console.log(element)
                 chats.push(element)
             }
 
