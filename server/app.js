@@ -29,10 +29,14 @@ const io = require('socket.io')(server)
 io.on('connection', function(socket) {
     console.log(socket.id)
     socket.on("SEND_MESSAGE",(data)=>{
-        console.log(data)
-        io.emit('MESSAGE', data)
+        console.log('new message')
+        io.to(data.id).emit('MESSAGE', data)
     })
     socket.on("NEW_USER",(data)=>{
         console.log(data)
+    })
+    socket.on("JOIN",(data)=>{
+        console.log('joined roomd')
+        socket.join(data)
     })
 });

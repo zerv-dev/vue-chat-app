@@ -18,12 +18,13 @@
 </template>
 <script>
 import io from 'socket.io-client';
+import socket from './../socket'
 import {mapState} from 'vuex'
 export default {
     name: 'Chat',
     // props:['username'],
     mounted() {
-        this.socket.on('MESSAGE', (data) => {
+        socket.on('MESSAGE', (data) => {
 		this.messages.push(data)
         });
     },
@@ -31,21 +32,26 @@ export default {
 		return {
 			messages:[],
 			currentMessage:'',
-			socket: io('localhost:8081'),
-			// username:'jeff'
 		}
 	},
 	computed:{
-		...mapState(['username'])
+		...mapState(['username','selectedChat'])
+	},
+	watch:{
+		selectedChat:function(newVersion,oldVersion){
+			console.log('updating')
+			socket.emit("JOIN",newVersion._id)
+		}
 	},
 	methods:{
 		addMessage(){
 			if(this.currentMessage !== ''){
 				let data = {
 					message: this.currentMessage,
-					username:this.username
+					username:this.username,
+					id:this.selectedChat._id
 				}
-				this.socket.emit("SEND_MESSAGE",data)
+				socket.emit("SEND_MESSAGE",data)
 				this.currentMessage = ''
 				let messageArea = this.$refs.messageArea
 				messageArea.scrollTop = messageArea.scrollHeight;

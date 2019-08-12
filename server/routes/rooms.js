@@ -57,7 +57,7 @@ router.get('/',(req,res)=>{
         let chats = []
         result.forEach(element => {
             if(element.participants.includes(userId)){
-                console.log(element)
+                // console.log(element)
                 chats.push(element)
             }
 

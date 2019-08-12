@@ -22,7 +22,6 @@
 import {mapState,mapActions} from 'vuex'
 import Navbar from './../components/Navbar'
 import Chat from './../components/Chat'
-import io from 'socket.io-client';
 import axios from 'axios'
 export default {
     name: 'Dashboard',
@@ -48,6 +47,8 @@ export default {
 		...mapActions(['fetchChats','setSelectedChat']),
 		selectChat(chat){
 			console.log(chat)
+			this.setSelectedChat(chat)
+
 		}
 		
 	},
