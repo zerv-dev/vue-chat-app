@@ -39,7 +39,6 @@ export default {
 	},
 	watch:{
 		selectedChat:function(newVersion,oldVersion){
-			console.log('updating')
 			socket.emit("JOIN",newVersion._id)
 		}
 	},

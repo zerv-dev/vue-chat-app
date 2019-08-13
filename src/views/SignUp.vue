@@ -33,7 +33,7 @@
 import {mapActions} from 'vuex'
 import axios from 'axios'
     export default {
-    name:"Login",
+    name:"SignUp",
 
     data:function(){
         return{

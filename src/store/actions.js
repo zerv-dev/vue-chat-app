@@ -11,5 +11,8 @@ export default{
     setSelectedChat({commit},payload){
         commit('SET_CURRENT_CHAT',payload)
         
+    },
+    addChat({commit},payload){
+    commit('ADD_CHAT',payload)
     }
 }

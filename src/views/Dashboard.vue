@@ -3,7 +3,9 @@
 		<Navbar></Navbar>
 		<div class="row">
 			<div class="col-3 p-0">
-				<button class="btn btn-primary">Create new chat</button>
+				<!-- <button class="btn btn-primary">Create new chat</button> -->
+				<CreateChatModal>Create new Chat</CreateChatModal>
+
 				<div class="chat-list">
 					<div v-for="chat in chats">
 						<div class="chat-card" @click="selectChat(chat)">
@@ -22,12 +24,14 @@
 import {mapState,mapActions} from 'vuex'
 import Navbar from './../components/Navbar'
 import Chat from './../components/Chat'
+import CreateChatModal from './../components/CreateChatModal'
 import axios from 'axios'
 export default {
     name: 'Dashboard',
 		components:{
 		Navbar,
-		Chat
+		Chat,
+		CreateChatModal
     },
     mounted() {
         axios.get('http://localhost:8081/api/room/',{

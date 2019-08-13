@@ -84,3 +84,35 @@ height: 1rem;
     }
 
 }
+
+
+label{
+    margin-bottom: 0;
+    float: left;
+}
+
+.createRoomModal{
+    background-color: white;
+    padding: 1rem;
+    position: absolute;
+    z-index:1;
+    margin-left: auto;
+    background-color: white;
+    padding: 1rem;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    width: 45rem;
+    margin-right: auto;
+    border-width: 1px;
+    border-style: solid;
+    // border-radius: 10px;
+    &__content{
+        // display: flex
+    }
+    &__footer{
+        display: flex;
+        justify-content: space-evenly;
+    }
+}

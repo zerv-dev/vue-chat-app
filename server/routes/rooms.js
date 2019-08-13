@@ -14,7 +14,8 @@ router.post('/',function(req,res){
     })
     room.save()
     res.status(202).json({
-        message:'Successfully created a new chatroom'
+        message:'Successfully created a new chatroom',
+        room:room
 
     })
 })
