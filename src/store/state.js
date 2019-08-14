@@ -1,5 +1,7 @@
 export default {
     username:'',
-    id:''
+    id:'',
+    chats:[],
+    selectedChat:{}
 
 };

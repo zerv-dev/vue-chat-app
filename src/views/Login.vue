@@ -25,6 +25,8 @@ import {mapActions} from 'vuex'
 import axios from 'axios'
 import { log } from 'util';
 export default {
+    components:{
+    },
     name:"Login",
 
     data:function(){
@@ -36,9 +38,7 @@ export default {
              axios.post('http://localhost:8081/api/user/login',{
                 username:this.username,
                 password:this.password,
-            }).then((response)=>{
-                console.log(response);
-                
+            }).then((response)=>{                
                 let payload= {
                     username:response.data.username,
                     id:response.data.id

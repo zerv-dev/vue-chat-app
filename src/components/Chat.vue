@@ -1,7 +1,13 @@
 <template>
     <div class="row">
 		<div class="col-12">
+
 			<div class="chat-container">
+				<div class="chat-container__header">
+					<span v-if="selectedChat">{{selectedChat.name}}</span>
+					<span class="fa fa-trash pl-2" @click="deleteChat()"></span>
+				</div>
+				
 				<div ref="messageArea" class="message-area">	
 					<div  class="message" v-for="(message, index) in messages" :key="`message-${index}`" >
 							<div class="message__text" 	:class="[message.username == username? 'ml-auto' : '']" > {{message.message}}</div>
@@ -18,12 +24,14 @@
 </template>
 <script>
 import io from 'socket.io-client';
-import {mapState} from 'vuex'
+import socket from './../socket'
+import {mapState,mapActions} from 'vuex'
+import axios from 'axios';
 export default {
     name: 'Chat',
     // props:['username'],
     mounted() {
-        this.socket.on('MESSAGE', (data) => {
+        socket.on('MESSAGE', (data) => {
 		this.messages.push(data)
         });
     },
@@ -31,25 +39,36 @@ export default {
 		return {
 			messages:[],
 			currentMessage:'',
-			socket: io('localhost:8081'),
-			// username:'jeff'
 		}
 	},
 	computed:{
-		...mapState(['username'])
+		...mapState(['username','selectedChat'])
+	},
+	watch:{
+		selectedChat:function(newVersion,oldVersion){
+			socket.emit("JOIN",newVersion._id)
+		}
 	},
 	methods:{
+		...mapActions(['removeChat']),
 		addMessage(){
 			if(this.currentMessage !== ''){
 				let data = {
 					message: this.currentMessage,
-					username:this.username
+					username:this.username,
+					id:this.selectedChat._id
 				}
-				this.socket.emit("SEND_MESSAGE",data)
+				socket.emit("SEND_MESSAGE",data)
 				this.currentMessage = ''
 				let messageArea = this.$refs.messageArea
 				messageArea.scrollTop = messageArea.scrollHeight;
 			}
+		},
+		deleteChat(){
+			axios.delete('http://localhost:8081/api/room/'+this.selectedChat._id).then((response)=>{
+				this.removeChat(this.selectedChat._id)
+				
+			})
 		}
 	}
 }

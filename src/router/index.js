@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 import Chat from './../views/Chat'
 import Login from './../views/Login'
 import SignUp from './../views/SignUp'
+import Dashboard from './../views/Dashboard'
 import store from './../store/index'
 Vue.use(VueRouter)
 const router = new VueRouter({
     routes: [
 		{ 
 			path: '/', 
-			component: Chat,
+			component: Dashboard,
 			meta:{
 				requiresAuth: true  		
 			}
