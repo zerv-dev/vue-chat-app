@@ -14,5 +14,8 @@ export default{
     },
     addChat({commit},payload){
     commit('ADD_CHAT',payload)
+    },
+    removeChat({commit},payload){
+        commit('REMOVE_CHAT',payload)
     }
 }

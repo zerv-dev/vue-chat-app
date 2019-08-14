@@ -1,7 +1,13 @@
 <template>
     <div class="row">
 		<div class="col-12">
+
 			<div class="chat-container">
+				<div class="chat-container__header">
+					<span v-if="selectedChat">{{selectedChat.name}}</span>
+					<span class="fa fa-trash pl-2" @click="deleteChat()"></span>
+				</div>
+				
 				<div ref="messageArea" class="message-area">	
 					<div  class="message" v-for="(message, index) in messages" :key="`message-${index}`" >
 							<div class="message__text" 	:class="[message.username == username? 'ml-auto' : '']" > {{message.message}}</div>
@@ -19,7 +25,8 @@
 <script>
 import io from 'socket.io-client';
 import socket from './../socket'
-import {mapState} from 'vuex'
+import {mapState,mapActions} from 'vuex'
+import axios from 'axios';
 export default {
     name: 'Chat',
     // props:['username'],
@@ -43,6 +50,7 @@ export default {
 		}
 	},
 	methods:{
+		...mapActions(['removeChat']),
 		addMessage(){
 			if(this.currentMessage !== ''){
 				let data = {
@@ -55,6 +63,12 @@ export default {
 				let messageArea = this.$refs.messageArea
 				messageArea.scrollTop = messageArea.scrollHeight;
 			}
+		},
+		deleteChat(){
+			axios.delete('http://localhost:8081/api/room/'+this.selectedChat._id).then((response)=>{
+				this.removeChat(this.selectedChat._id)
+				
+			})
 		}
 	}
 }

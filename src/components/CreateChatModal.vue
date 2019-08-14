@@ -31,7 +31,7 @@ export default {
         return{
             name:'',
             participatants:[],
-            displayModal:true
+            displayModal:false
         }
     },
     methods:{
@@ -40,7 +40,7 @@ export default {
             this.participatants.push(this.username)
             axios.post('http://localhost:8081/api/room',{
                 name:this.name,
-                participants:[this.username]
+                participants:[this.id]
             }).then((response)=>{
                 console.log(response)
                 this.addChat(response.data.room)
@@ -55,7 +55,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(['username'])
+        ...mapState(['username,id'])
     }
 
 
